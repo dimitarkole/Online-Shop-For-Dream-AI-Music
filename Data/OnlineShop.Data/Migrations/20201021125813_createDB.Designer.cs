@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Data;
 
 namespace OnlineShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201021125813_createDB")]
+    partial class createDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -249,41 +251,6 @@ namespace OnlineShop.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("OnlineShop.Data.Models.Category", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ParentCategoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ParentCategoryId");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("OnlineShop.Data.Models.Order", b =>
                 {
                     b.Property<string>("Id")
@@ -313,7 +280,7 @@ namespace OnlineShop.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("OnlineShop.Data.Models.OrderProduct", b =>
+            modelBuilder.Entity("OnlineShop.Data.Models.OrderItem", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -347,15 +314,12 @@ namespace OnlineShop.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("OnlineShop.Data.Models.Product", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CategoryId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -381,46 +345,9 @@ namespace OnlineShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("OnlineShop.Data.Models.ProductImages", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("OnlineShop.Data.Models.Setting", b =>
@@ -506,13 +433,6 @@ namespace OnlineShop.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineShop.Data.Models.Category", b =>
-                {
-                    b.HasOne("OnlineShop.Data.Models.Category", "ParentCategory")
-                        .WithMany("ChidrenCategories")
-                        .HasForeignKey("ParentCategoryId");
-                });
-
             modelBuilder.Entity("OnlineShop.Data.Models.Order", b =>
                 {
                     b.HasOne("OnlineShop.Data.Models.ApplicationUser", "User")
@@ -520,28 +440,14 @@ namespace OnlineShop.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("OnlineShop.Data.Models.OrderProduct", b =>
+            modelBuilder.Entity("OnlineShop.Data.Models.OrderItem", b =>
                 {
                     b.HasOne("OnlineShop.Data.Models.Order", "Order")
-                        .WithMany("OrderProducts")
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
                     b.HasOne("OnlineShop.Data.Models.Product", "Product")
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("OnlineShop.Data.Models.Product", b =>
-                {
-                    b.HasOne("OnlineShop.Data.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId");
-                });
-
-            modelBuilder.Entity("OnlineShop.Data.Models.ProductImages", b =>
-                {
-                    b.HasOne("OnlineShop.Data.Models.Product", "Product")
-                        .WithMany("ProductImages")
+                        .WithMany("OrderItems")
                         .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618

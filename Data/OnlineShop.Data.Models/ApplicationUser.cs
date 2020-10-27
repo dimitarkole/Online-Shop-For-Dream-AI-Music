@@ -16,7 +16,12 @@ namespace OnlineShop.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Orders = new HashSet<Order>();
         }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
@@ -27,6 +32,8 @@ namespace OnlineShop.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
