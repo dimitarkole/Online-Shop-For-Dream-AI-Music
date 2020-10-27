@@ -10,7 +10,7 @@ namespace OnlineShop.Data.Models
         public Order()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.OrderItems = new HashSet<OrderItem>();
+            this.OrderProducts = new HashSet<OrderProduct>();
         }
 
         public string Id { get; set; }
@@ -19,7 +19,7 @@ namespace OnlineShop.Data.Models
 
         public string UserId { get; set; }
 
-        public virtual ICollection<OrderItem> OrderItems{ get; set; }
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }

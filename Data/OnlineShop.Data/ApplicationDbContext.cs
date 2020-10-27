@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using OnlineShop.Data.Common.Models;
-    using OnlineShop.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using OnlineShop.Data.Common.Models;
+    using OnlineShop.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -28,10 +27,13 @@
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<ProductImages> ProductImages { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

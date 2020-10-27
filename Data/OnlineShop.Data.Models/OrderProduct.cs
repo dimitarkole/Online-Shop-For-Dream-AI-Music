@@ -6,9 +6,9 @@
 
     using OnlineShop.Data.Common.Models;
 
-    public class OrderItem : IAuditInfo, IDeletableEntity
+    public class OrderProduct : IAuditInfo, IDeletableEntity
     {
-        public OrderItem()
+        public OrderProduct()
         {
             this.Id = Guid.NewGuid().ToString();
         }

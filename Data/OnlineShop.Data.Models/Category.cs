@@ -6,30 +6,28 @@
 
     using OnlineShop.Data.Common.Models;
 
-    public class Product : IAuditInfo, IDeletableEntity
+    public class Category : IAuditInfo, IDeletableEntity
     {
-        public Product()
+        public Category()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.OrderProducts = new HashSet<OrderProduct>();
-            this.ProductImages = new HashSet<ProductImages>();
+            this.ChidrenCategories = new HashSet<Category>();
+            this.Products = new HashSet<Product>();
         }
 
         public string Id { get; set; }
 
         public string Name { get; set; }
 
-        public string Text { get; set; }
+        public string FullImageName { get; set; }
 
-        public double Price { get; set; }
+        public Category ParentCategory { get; set; }
 
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
+        public string ParentCategoryId { get; set; }
 
-        public virtual ICollection<ProductImages> ProductImages { get; set; }
+        public virtual ICollection<Category> ChidrenCategories { get; set; }
 
-        public virtual Category Category { get; set; }
-
-        public string CategoryId { get; set; }
+        public virtual ICollection<Product> Products{ get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
