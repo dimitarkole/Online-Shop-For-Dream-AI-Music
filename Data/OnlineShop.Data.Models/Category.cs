@@ -13,6 +13,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.ChidrenCategories = new HashSet<Category>();
             this.Products = new HashSet<Product>();
+            this.Tables = new HashSet<Table>();
         }
 
         public string Id { get; set; }
@@ -27,7 +28,9 @@
 
         public virtual ICollection<Category> ChidrenCategories { get; set; }
 
-        public virtual ICollection<Product> Products{ get; set; }
+        public virtual ICollection<Table> Tables { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
