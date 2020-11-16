@@ -2,7 +2,9 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class BaseController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class BaseController : ControllerBase
     {
     }
 }
