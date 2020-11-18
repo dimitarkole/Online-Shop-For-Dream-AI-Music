@@ -4,11 +4,10 @@
     using System.Diagnostics;
     using System.Threading.Tasks;
 
-
-    public class HomeController : BaseController
+    public class HomeController : ApiController
     {
         [HttpGet]
         public ActionResult Index()
-            => this.Ok("hi");
+            => this.Ok();
     }
 }
