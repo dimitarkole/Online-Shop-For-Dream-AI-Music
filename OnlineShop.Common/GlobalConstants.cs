@@ -4,6 +4,11 @@
     {
         public const string SystemName = "OnlineShop";
 
-        public const string AdministratorRoleName = "Administrator";
+        public static class Roles
+        {
+            public const string AdministratorRoleName = "Administrator";
+
+            public const string UserRoleName = "User";
+        }
     }
 }

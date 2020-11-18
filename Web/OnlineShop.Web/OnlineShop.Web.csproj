@@ -9,27 +9,49 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Client\src\app\NewFolder\**" />
+    <Compile Remove="Client\src\app\shared\footer\footer\**" />
+    <Content Remove="Client\src\app\NewFolder\**" />
+    <Content Remove="Client\src\app\shared\footer\footer\**" />
+    <EmbeddedResource Remove="Client\src\app\NewFolder\**" />
+    <EmbeddedResource Remove="Client\src\app\shared\footer\footer\**" />
+    <None Remove="Client\src\app\NewFolder\**" />
+    <None Remove="Client\src\app\shared\footer\footer\**" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
+    <PackageReference Include="Aurelia.AspNetCore.SpaServices.AureliaCli" Version="3.1.0" />
+    <PackageReference Include="Hangfire" Version="1.7.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
-    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.3" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.76" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.8" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205" PrivateAssets="all">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.5" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    </ItemGroup>
 
-  <ItemGroup>
+
+      <ItemGroup>
     <ProjectReference Include="..\..\OnlineShop.Common\OnlineShop.Common.csproj" />
     <ProjectReference Include="..\..\Data\OnlineShop.Data.Models\OnlineShop.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\OnlineShop.Data\OnlineShop.Data.csproj" />
@@ -40,4 +62,13 @@
     <ProjectReference Include="..\OnlineShop.Web.Infrastructure\OnlineShop.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\OnlineShop.Web.ViewModels\OnlineShop.Web.ViewModels.csproj" />
   </ItemGroup>
+
+
+      <ItemGroup>
+        <Folder Include="Client\src\app\components\" />
+        <Folder Include="Client\src\app\core\services\" />
+        <Folder Include="Client\src\app\core\resolvers\" />
+        <Folder Include="Client\src\app\shared\nav-bar\" />
+        <Folder Include="Client\src\app\shared\models\" />
+      </ItemGroup>
 </Project>

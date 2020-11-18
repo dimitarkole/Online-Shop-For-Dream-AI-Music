@@ -1,28 +1,13 @@
 ﻿namespace OnlineShop.Web.Controllers
 {
-    using System.Diagnostics;
-
-    using OnlineShop.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
 
-    public class HomeController : BaseController
+    public class HomeController : ApiController
     {
-        public IActionResult Index()
-        {
-            return this.View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return this.View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return this.View(
-                new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
-        }
+        [HttpGet]
+        public ActionResult Index()
+            => this.Ok();
     }
 }
