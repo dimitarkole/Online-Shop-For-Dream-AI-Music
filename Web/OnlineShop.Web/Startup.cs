@@ -23,6 +23,11 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
     using System.Collections.Generic;
+    using OnlineShop.Services.Interfaces;
+    using OnlineShop.Services;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.IdentityModel.Tokens;
 
     public class Startup
     {
@@ -88,6 +93,31 @@
                });
             });
 
+            var appSettingsSectionCongig = configuration.GetSection("ApplicationSettings");
+            services.Configure<ApplicationSettings>(appSettingsSectionCongig);
+
+            var appSetings = appSettingsSectionCongig.Get<ApplicationSettings>();
+
+            var key = Encoding.ASCII.GetBytes(appSetings.Secret);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+           .AddJwtBearer(options =>
+           {
+               options.RequireHttpsMetadata = false;
+               options.SaveToken = true;
+               options.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(key),
+                   ValidateIssuer = false,
+                   ValidateAudience = false,
+               };
+           });
+
             services.AddSingleton(this.configuration);
 
             // Data repositories
@@ -98,6 +128,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IProfileService, ProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
