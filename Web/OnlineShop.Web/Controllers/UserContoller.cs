@@ -14,18 +14,12 @@ namespace OnlineShop.Web.Controllers
     [Authorize(Roles = GlobalConstants.Roles.UserRoleName)]
     public abstract class UserContoller : ApiController
     {
-        protected readonly UserManager<ApplicationUser> userManager;
-        protected readonly SignInManager<ApplicationUser> signInManager;
-        protected readonly ILogger<LogoutModel> logger;
-
-        public UserContoller(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
-          ILogger<LogoutModel> logger)
+        protected UserContoller(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<LogoutModel> logger) 
+            : base(userManager, signInManager, logger)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.logger = logger;
         }
     }
 }

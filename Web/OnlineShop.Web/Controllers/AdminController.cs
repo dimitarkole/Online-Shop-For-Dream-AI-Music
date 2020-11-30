@@ -15,18 +15,12 @@
     [Authorize(Roles = GlobalConstants.Roles.AdministratorRoleName)]
     public abstract class AdminController : ApiController
     {
-        protected readonly UserManager<ApplicationUser> userManager;
-        protected readonly SignInManager<ApplicationUser> signInManager;
-        protected readonly ILogger<LogoutModel> logger;
-
-        public AdminController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
-          ILogger<LogoutModel> logger)
+        protected AdminController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILogger<LogoutModel> logger)
+            : base(userManager, signInManager, logger)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.logger = logger;
         }
     }
 }
