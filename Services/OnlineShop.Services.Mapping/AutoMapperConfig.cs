@@ -12,8 +12,6 @@
     {
         private static bool initialized;
 
-        public static IMapper MapperInstance { get; set; }
-
         public static void RegisterMappings(params Assembly[] assemblies)
         {
             if (initialized)
@@ -22,9 +20,7 @@
             }
 
             initialized = true;
-
             var types = assemblies.SelectMany(a => a.GetExportedTypes()).ToList();
-
             var config = new MapperConfigurationExpression();
             config.CreateProfile(
                 "ReflectionProfile",
@@ -48,7 +44,7 @@
                         map.CreateMappings(configuration);
                     }
                 });
-            MapperInstance = new Mapper(new MapperConfiguration(config));
+            Mapper.Initialize(config);
         }
 
         private static IEnumerable<TypesMap> GetFromMaps(IEnumerable<Type> types)
@@ -64,7 +60,6 @@
                                Source = i.GetTypeInfo().GetGenericArguments()[0],
                                Destination = t,
                            };
-
             return fromMaps;
         }
 
@@ -81,7 +76,6 @@
                              Source = t,
                              Destination = i.GetTypeInfo().GetGenericArguments()[0],
                          };
-
             return toMaps;
         }
 
@@ -93,7 +87,6 @@
                                    !t.GetTypeInfo().IsAbstract &&
                                    !t.GetTypeInfo().IsInterface
                              select (IHaveCustomMappings)Activator.CreateInstance(t);
-
             return customMaps;
         }
 
