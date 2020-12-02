@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Internal;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using OnlineShop.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OnlineShop.Web.Controllers
+﻿namespace OnlineShop.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Internal;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using OnlineShop.Data.Models;
+
     [ApiController]
     [Route("[controller]")]
     public abstract class ApiController : ControllerBase

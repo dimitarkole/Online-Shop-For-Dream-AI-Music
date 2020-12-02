@@ -9,9 +9,7 @@
     using OnlineShop.Services.Interfaces;
     using OnlineShop.Web.Infrastucture.Configurations;
     using OnlineShop.Web.Infrastucture.Extensions;
-    using OnlineShop.Web.ViewModels.Auto;
-    using System;
-    using System.Collections.Generic;
+    using OnlineShop.Web.ViewModels.IdentityModels;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -30,7 +28,7 @@
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<ApplicationUser>> Registatrion(RegisterInputModel model)
+        public async Task<ActionResult<ApplicationUser>> Create(IdentityCreateInputModel model)
         {
             var user = new ApplicationUser
             {
@@ -48,7 +46,6 @@
 
             return user;
         }
-
 
         [HttpPost("[action]")]
         public async Task<ActionResult<ApplicationUser>> Login(LoginInputModel model, [FromServices] IOptions<JwtSettings> settings)

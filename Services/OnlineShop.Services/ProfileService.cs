@@ -1,16 +1,17 @@
 ﻿namespace OnlineShop.Services
 {
     using System;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
     using System.Text;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.IdentityModel.Tokens;
+    using OnlineShop.Common;
+    using OnlineShop.Data;
     using OnlineShop.Data.Models;
     using OnlineShop.Services.Interfaces;
-    using OnlineShop.Data;
-    using Microsoft.AspNetCore.Identity;
-    using System.IdentityModel.Tokens.Jwt;
-    using Microsoft.IdentityModel.Tokens;
-    using System.Security.Claims;
-    using System.Linq;
-    using OnlineShop.Common;
 
     public class ProfileService : IProfileService
     {

@@ -1,134 +1,66 @@
 ﻿namespace OnlineShop.Web
 {
+    using System.Collections.Generic;
     using System.Reflection;
+    using System.Text;
 
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
     using OnlineShop.Data;
     using OnlineShop.Data.Common;
     using OnlineShop.Data.Common.Repositories;
     using OnlineShop.Data.Models;
     using OnlineShop.Data.Repositories;
     using OnlineShop.Data.Seeding;
+    using OnlineShop.Services;
     using OnlineShop.Services.Data;
+    using OnlineShop.Services.Interfaces;
     using OnlineShop.Services.Mapping;
     using OnlineShop.Services.Messaging;
+    using OnlineShop.Web.Infrastucture.Extensions;
+    using OnlineShop.Web.Infrastucture.Filters;
     using OnlineShop.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.OpenApi.Models;
-    using System.Collections.Generic;
-    using OnlineShop.Services.Interfaces;
-    using OnlineShop.Services;
-    using System.Text;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.IdentityModel.Tokens;
 
     public class Startup
     {
-        private readonly IConfiguration configuration;
-
         public Startup(IConfiguration configuration)
         {
-            this.configuration = configuration;
+            this.Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; protected set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+            services
+              .AddDatabase(this.Configuration)
+              .AddIdentity()
+              .AddJwtAuthentication(services.GetAppSettings(this.Configuration))
+              .AddApplicationServices()
+              .AddCors(options => options.AddPolicy("AllowWebApp", builder => builder
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .WithOrigins("http://localhost:4200", "http://localhost:5000", "https://localhost:4200", "https://localhost:5000")))
+              .AddSwagger(this.Configuration)
+              .AddControllers();
 
-            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.Configure<CookiePolicyOptions>(
-                options =>
-                    {
-                        options.CheckConsentNeeded = context => true;
-                        options.MinimumSameSitePolicy = SameSiteMode.None;
-                    });
-
-            services.AddControllersWithViews(
-                options =>
-                    {
-                        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                    }).AddRazorRuntimeCompilation();
-            services.AddRazorPages();
-
-            services.AddSwaggerGen(c =>
+            services.AddMvc(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Online shop", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      \r\n\r\nExample: 'Bearer 12345abcdef'",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                 {
-                   {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer",
-                                },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
-                        },
-                        new List<string>()
-                   }
-               });
-            });
-
-            var appSettingsSectionCongig = configuration.GetSection("ApplicationSettings");
-            services.Configure<ApplicationSettings>(appSettingsSectionCongig);
-
-            var appSetings = appSettingsSectionCongig.Get<ApplicationSettings>();
-
-            var key = Encoding.ASCII.GetBytes(appSetings.Secret);
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.Filters.Add<ValidateModelStateActionFilter>();
+                options.Filters.Add<ExceptionFilter>();
             })
-           .AddJwtBearer(options =>
-           {
-               options.RequireHttpsMetadata = false;
-               options.SaveToken = true;
-               options.TokenValidationParameters = new TokenValidationParameters
-               {
-                   ValidateIssuerSigningKey = true,
-                   IssuerSigningKey = new SymmetricSecurityKey(key),
-                   ValidateIssuer = false,
-                   ValidateAudience = false,
-               };
-           });
-
-            services.AddSingleton(this.configuration);
-
-            // Data repositories
-            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
-
-            // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IProfileService, ProfileService>();
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -137,13 +69,14 @@
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-            }
+            /* using (var serviceScope = app.ApplicationServices.CreateScope())
+             {
+                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                 dbContext.Database.Migrate();
+                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+             }*/
 
+            app.UseDeveloperExceptionPage();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -167,6 +100,7 @@
                      options.RoutePrefix = string.Empty;
                  })
                 .UseRouting()
+                .UseCors("AllowWebApp")
                 .UseCors(options => options
                     .AllowAnyMethod()
                     .AllowAnyHeader()
