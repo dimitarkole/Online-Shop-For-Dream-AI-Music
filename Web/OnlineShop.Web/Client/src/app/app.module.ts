@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
+import { SingupComponent } from './auth/singup/singup.component';
+import { SinginComponent } from './auth/singin/singin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     NavBarComponent,
-    HomeComponent
+    HomeComponent,
+    SingupComponent,
+    SinginComponent
   ],
   imports: [
     BrowserModule,
