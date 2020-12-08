@@ -11,13 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Client\src\app\NewFolder\**" />
     <Compile Remove="Client\src\app\shared\footer\footer\**" />
-    <Content Remove="Client\src\app\NewFolder\**" />
     <Content Remove="Client\src\app\shared\footer\footer\**" />
-    <EmbeddedResource Remove="Client\src\app\NewFolder\**" />
     <EmbeddedResource Remove="Client\src\app\shared\footer\footer\**" />
-    <None Remove="Client\src\app\NewFolder\**" />
     <None Remove="Client\src\app\shared\footer\footer\**" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +66,7 @@
         <Folder Include="Client\src\app\components\" />
         <Folder Include="Client\src\app\core\services\" />
         <Folder Include="Client\src\app\core\resolvers\" />
+        <Folder Include="Client\src\app\auth\" />
         <Folder Include="Client\src\app\shared\nav-bar\" />
         <Folder Include="Client\src\app\shared\models\" />
       </ItemGroup>
