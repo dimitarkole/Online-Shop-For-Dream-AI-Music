@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { ConfirmedValidator } from '../../common/confirmed.validator';
 import User from '../../shared/models/user';
-import { AuthService } from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-singup',
-  templateUrl: './singup.component.html',
-  styleUrls: ['./singup.component.css']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class SingupComponent implements OnInit {
+export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
   wrongCredentials: boolean = false;
   successfulCredentials: boolean = false;
@@ -84,6 +84,4 @@ export class SingupComponent implements OnInit {
   get birthday(): AbstractControl {
     return this.signUpForm.get('birthday');
   }
-
-
 }

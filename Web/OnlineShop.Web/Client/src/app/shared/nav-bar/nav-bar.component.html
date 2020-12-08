@@ -3,50 +3,90 @@
     <div class="row">
       <div class="col">
         <div class="header_content d-flex flex-row align-items-center justify-content-center">
-
           <!-- Logo -->
           <div class="logo">
             <a href="#" class="d-flex flex-row align-items-end justify-content-start">
-              <span class="logo_bars d-flex flex-row align-items-end justify-content-between"><span></span><span></span><span></span><span></span><span></span></span>
-              <span class="logo_text">music</span>
+              <img src="../../../../assets/images/icon_2.png" alt="Alternate Text" class="logo_bars" />
+              <!--<span class="logo_bars d-flex flex-row align-items-end justify-content-between">
+              <span></span><span></span><span></span><span></span><span></span></span> -->
+              <span class="logo_text">Song me</span>
             </a>
           </div>
 
           <!-- Main Navigation -->
           <nav class="main_nav">
             <ul class="d-flex flex-row align-items-center justify-content-start">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item text-black" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-
-              <li class="active"><a href="index.html">Home</a></li>
-              <li><a href="artists.html">Artists</a></li>
-              <li><a href="#">Download Music</a></li>
-              <li><a href="blog.html">News</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a routerLink="/">Songs</a></li>
+              <li><a routerLink="/home/playlists">Playlists</a></li>
             </ul>
           </nav>
 
           <!-- User area -->
-          <div class="log_reg d-flex flex-row align-items-center justify-content-start">
-            <ul class="d-flex flex-row align-items-start justify-content-start">
-              <li><a routerLink="/signIn">Login</a></li>
-              <li><a routerLink="/signUp">Register</a></li>
-            </ul>
+          <div class="custum_dropdown_menu_header d-flex flex-row align-items-center justify-content-start" *ngIf="isAuth">
+            <nav class="main_nav">
+              <ul class="d-flex flex-row align-items-start justify-content-start row">
+                <!-- Dropdown -->
+                <li>
+                  <a routerLink="/category/create" *ngIf="isAdmin">
+                    <img src="../../../../assets/images/icon_addCategory.png" alt="Alternate Text" class="add_element_header" />
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    {{username}}
+                  </a>
 
-            <!-- Hamburger -->
-            <div class="hamburger d-flex flex-column align-items-end justify-content-between"><div></div><div></div><div></div></div>
+                  <!-- admin items -->
+                  <div class="dropdown-menu">
+                    <div class="dropdown-item">
+                      <a routerLink="/myProfile" class="row text-dark">
+                        <small>Wellcom,</small>
+                        {{username}}
+                      </a>
+
+                    </div>
+                    <div class="dropdown-item" *ngIf="isAdmin">
+                      <a routerLink="/category/create" class="row ">
+                        <i class="col-md-2" style="background: url('../../../../assets/images/icon_addCategory.png') no-repeat;"></i>
+                        <div class="col-md-10 text-dark">
+                          Add categories
+                        </div>
+                      </a>
+                    </div>
+
+                    <!-- logout -->
+                    <div class="dropdown-item">
+                      <a (click)="logout()" class="row text-dark">
+                        <i class="col-md-2" style="background: url('../../../../assets/images/icon_logout.png') no-repeat;"></i>
+                        <div class="col-md-9">
+                          Logout
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div class="log_reg d-flex flex-row align-items-center justify-content-start" *ngIf="!isAuth">
+            <nav class="main_nav">
+              <ul class="d-flex flex-row align-items-start justify-content-start row">
+                <li><a routerLink="/login">Login</a></li>
+                <li><a routerLink="/signup">Register</a></li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
     </div>
   </div>
 </header>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

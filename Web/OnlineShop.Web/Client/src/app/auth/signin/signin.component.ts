@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { AbstractControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-singin',
-  templateUrl: './singin.component.html',
-  styleUrls: ['./singin.component.css']
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.css']
 })
-export class SinginComponent implements OnInit {
+export class SigninComponent implements OnInit {
   signInForm: FormGroup;
   wrongCredentials: boolean = false;
   successfulCredentials: boolean = false;
@@ -49,5 +49,5 @@ export class SinginComponent implements OnInit {
 
   get password(): AbstractControl {
     return this.signInForm.get('password');
-  } 
+  }
 }
