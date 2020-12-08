@@ -1,10 +1,12 @@
 ﻿namespace OnlineShop.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Internal;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using OnlineShop.Common;
     using OnlineShop.Data.Models;
     using OnlineShop.Services.Interfaces;
     using OnlineShop.Web.Infrastucture.Configurations;
@@ -34,6 +36,8 @@
             {
                 Email = model.Email,
                 UserName = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
             };
 
             user.Roles.Add(this.profileService.SetUserRole(user));
@@ -58,6 +62,13 @@
             }
 
             return new JsonResult(jwtToken);
+        }
+
+        [Authorize]
+        [HttpGet("Username")]
+        public ActionResult<string> GetUsername()
+        {
+            return this.User.Identity.Name;
         }
     }
 }
