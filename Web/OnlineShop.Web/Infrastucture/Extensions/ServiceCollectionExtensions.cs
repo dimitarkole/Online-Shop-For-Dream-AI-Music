@@ -82,7 +82,8 @@
                 .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
                 .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
                 .AddScoped<IDbQueryRunner, DbQueryRunner>()
-                .AddTransient<IProfileService, ProfileService>();
+                .AddTransient<IProfileService, ProfileService>()
+                .AddTransient<ICategoryService, CategoryService>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration)
         {

@@ -27,7 +27,7 @@
 
         public virtual ICollection<Category> ChidrenCategories { get; set; }
 
-        public virtual ICollection<Product> Products{ get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
