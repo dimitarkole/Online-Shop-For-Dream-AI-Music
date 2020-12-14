@@ -21,7 +21,10 @@ namespace OnlineShop.Services
         }
 
         public IList<T> All<T>()
-             => this.context.Categories.To<T>().ToList();
+             => this.context.Categories
+                .OrderBy(c => c.Name)
+                .To<T>()
+                .ToList();
 
         public async Task<string> Create(CategoryCreateInputModel model)
         {
