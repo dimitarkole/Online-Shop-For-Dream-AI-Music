@@ -38,7 +38,6 @@ export class CategoryEditComponent implements OnInit {
     this.categoryForm.reset();
   }
 
-
   get name(): AbstractControl {
     return this.categoryForm.get('name');
   }

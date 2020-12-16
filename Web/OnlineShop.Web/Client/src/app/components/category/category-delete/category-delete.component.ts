@@ -16,5 +16,4 @@ export class CategoryDeleteComponent {
       this.router.navigate(['']);
     }
   }
-
 }

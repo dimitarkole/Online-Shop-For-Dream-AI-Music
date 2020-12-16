@@ -57,12 +57,10 @@ export class AuthService {
   }
 
   create(user: User) {
-    console.log(user);
     return this.http.post(`${this.root}/Create`, user);
   }
 
   login(username: string, password: string) {
-    console.log(username + " " + password);
     return this.http.post(`${this.root}/Login`, { username, password });
   }
 
