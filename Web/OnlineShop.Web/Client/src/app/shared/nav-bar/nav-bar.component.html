@@ -31,6 +31,7 @@
                     <img src="../../../../assets/images/icon_addCategory.png" alt="Alternate Text" class="add_element_header" />
                   </a>
                 </li>
+
                 <li>
                   <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                     {{username}}
@@ -49,7 +50,15 @@
                       <a routerLink="/category/create" class="row ">
                         <i class="col-md-2" style="background: url('../../../../assets/images/icon_addCategory.png') no-repeat;"></i>
                         <div class="col-md-10 text-dark">
-                          Add categories
+                          Add category
+                        </div>
+                      </a>
+                    </div>
+                    <div class="dropdown-item" *ngIf="isAdmin">
+                      <a routerLink="/category/all" class="row ">
+                        <i class="col-md-2" style="background: url('../../../../assets/images/icon_addCategory.png') no-repeat;"></i>
+                        <div class="col-md-10 text-dark">
+                          All categories
                         </div>
                       </a>
                     </div>
@@ -72,8 +81,8 @@
           <div class="log_reg d-flex flex-row align-items-center justify-content-start" *ngIf="!isAuth">
             <nav class="main_nav">
               <ul class="d-flex flex-row align-items-start justify-content-start row">
-                <li><a routerLink="/login">Login</a></li>
-                <li><a routerLink="/signup">Register</a></li>
+                <li><a routerLink="/signIn">Login</a></li>
+                <li><a routerLink="/signUp">Register</a></li>
               </ul>
             </nav>
           </div>

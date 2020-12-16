@@ -68,6 +68,5 @@
         <Folder Include="Client\src\app\core\resolvers\" />
         <Folder Include="Client\src\app\auth\" />
         <Folder Include="Client\src\app\shared\nav-bar\" />
-        <Folder Include="Client\src\app\shared\models\" />
       </ItemGroup>
 </Project>

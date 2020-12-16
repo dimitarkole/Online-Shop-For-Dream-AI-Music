@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Client';
+  title = 'Dream AI Music Online shop';
+  constructor(private authService: AuthService) {
+    this.authService.initializeAuthenticationState();
+  }
 }

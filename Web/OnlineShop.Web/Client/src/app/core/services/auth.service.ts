@@ -10,6 +10,7 @@ import * as jwtDecode from "jwt-decode";
   providedIn: 'root'
 })
 export class AuthService {
+  root: string = "Profile";
 
   constructor(
     private router: Router,
@@ -56,11 +57,11 @@ export class AuthService {
   }
 
   create(user: User) {
-    return this.http.post("Profile/Create", user);
+    return this.http.post(`${this.root}/Create`, user);
   }
 
   login(username: string, password: string) {
-    return this.http.post("Profile/Login", { username, password });
+    return this.http.post(`${this.root}/Login`, { username, password });
   }
 
   logout() {
